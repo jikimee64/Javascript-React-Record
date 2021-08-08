@@ -1,0 +1,2 @@
+npm run server로 실행
+npm run build는 운영환경
