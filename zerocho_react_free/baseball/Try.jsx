@@ -8,7 +8,8 @@ const Try = memo(({tryInfo}) => {
     //왜? 자식이 바꾸면 부모에게도 영항을 끼치기 때문에
     //만약 자식에서 바꿔야된다면?(실무에서 종종 일어남)
     //props를 state로 바꾼다음 그 state를 바꿈
-    const [result, setResult] = useState(tryInfo.result); //좋은 구조는 아니긴 함
+    const [result, setResult] = useState(tryInfo.result); //좋은 구조는 아니긴 함(안티패턴)
+    //제대로 쓸라면 getDerivedStateFromProps를 써야함(부모 setState 를 자식에게 넘겨서 변경)
 
     const onClick = () => {
         setResult('1');
