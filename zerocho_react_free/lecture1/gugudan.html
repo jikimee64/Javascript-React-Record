@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="root">
+
+</div>
+
+<script type="text/babel">
+
+    class GuGuDan extends React.Component {
+        constructor(props) {
+            super(props);
+            //바뀌는 것들 속성으로 추가
+            this.state = {
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value: '',
+                result: '',
+                resultNumber: '',
+                message: '',
+            }
+        }
+
+        //클래스 메서드
+        onSubmit = (e) => {
+            e.preventDefault();
+            if (parseInt(this.state.value) === this.state.first * this.state.second) {
+                //★★★★★★ 자주 쓰임(이전 state와 변화된 state 확인 가능)
+                this.setState((prevState) => {
+                    return { //새로운 state를 리턴
+                        result: '정답: ' + prevState.value,
+                        first: Math.ceil(Math.random() * 9),
+                        second: Math.ceil(Math.random() * 9),
+                        value: '',
+                        resultNumber: '',
+                        message: '',
+                    };
+                });
+                //setState는 비동기임, 그래서 여러개 선언되면 값이 예상치 못할 수 있음
+                // this.setState({
+                //     value: this.state.value + 1,
+                // });
+                //
+                // this.setState({
+                //     value: this.state.value + 1,
+                // });
+                //
+                // this.setState({
+                //     value: this.state.value + 1,
+                // });
+                //
+
+            } else {
+                this.setState({
+                    result: '땡',
+                    value: '',
+                    message: `정답은 ${this.state.first * this.state.second} 입니다.`,
+                });
+            }
+            this.input.focus();
+        }
+
+        //클래스 메서드
+        onChange = (e) => {
+            this.setState({value: e.target.value})
+        };
+
+        // 리액트쓰면 document같은거 안씀
+        // 화면을 조작하는 리액트를 믿고, 개발자는 데이터만 조작
+        // 이건 그냥 암기
+        // ref란? Dom에 직접 접근
+        input;
+
+        onRefInput = (c) => {
+            this.input = c;
+        };
+
+        //렌더함수만 재실행
+        render() {
+            //this.setState를 할때는 render() 함수가 다시 실행되는걸 알려야 됨
+            //=> 만약 함수를 따로 뺴지 않고 태그안에 선언하면 렌더할떄마다 함수를 다시 그려줌
+            //=> 그래서 함수를 빼주는게 좋다
+            //지금은 input창에 입력할때마다 계속 호출함
+            //만약 10초 걸리는 로직이 있으면 성능상 문제
+
+            //리액트에서는 태그안의 속성에 class못씀 className으로 써야함
+            //for안됨 htmlFor로 써야함
+            console.log('렌더링');
+            return (
+                <div>
+                    <div>{this.state.first} 곱하기 {this.state.second}는?</div>
+                    <form onSubmit={this.onSubmit}>
+                        <input ref={this.onRefInput} type="number" value={this.state.value}
+                               onChange={this.onChange}/>
+                        <button>입력</button>
+                    </form>
+                    <div>{this.state.result} {this.state.message}</div>
+                </div>
+            );
+        }
+    }
+</script>
+
+<script type="text/babel">
+    ReactDOM.render(<GuGuDan/>, document.querySelector("#root"));
+</script>
+</body>
+</html>

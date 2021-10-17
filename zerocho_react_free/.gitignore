@@ -1,0 +1,14 @@
+.idea
+
+### Frontend ###
+./baseball/node_modules
+./baseball/dist
+
+./gugudanwebpack/node_modules/**
+./gugudanwebpack/dist/**
+
+./webpack/node_modules/**
+./webpack/dist/**
+
+./wordrealy/node_modules/**
+./wordrealy/dist/**

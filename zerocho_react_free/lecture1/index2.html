@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="root">
+
+</div>
+
+<!--babel이 있어야 js안에 html태그를 사용할 수 있음(바벨이 createElement로 바꿔줌 -->
+<script type="text/babel">
+    //const e = React.createElement; 필요없음
+
+    //클래스하나 = 컴포넌트 하나
+    //대문자로 시작하는건 리액트 컴포넌트
+    class LikeButton extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                liked: false,
+            }; //상태
+        }
+
+        render() {
+            // JSX라고 부름 = (JS + XML), html보단 문법이 엄격하다
+            return<button type="submit" onClick={
+                () => {
+                    this.setState({liked: true})
+                }
+            }>
+                {this.state.liked === true ? 'Liked' : 'Like'}
+            </button>
+        }
+    }
+</script>
+
+<script type="text/babel">
+    //웹에서 실제로 렌더링하는 역할
+    //닫는 괄호 꼭 해줘야함
+    //하나의 컴포넌트를 중복해서 생성 가능
+    ReactDOM.render(<div><LikeButton/><LikeButton/></div>, document.querySelector("#root"));
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+React.createClass -> Class -> Hooks
+
+Hooks가 페이스북이 미는 리액트의 표준
+Class는 레거시긴 하지만 거의 Class로 만들어진 웹
+
+리액트를 왜쓰는가
+사용자 인터페이스를 만들기 위한것
+사용자 인터페이스의 종류 : 버튼 등
+
+SPA(Single Page Application) : 리액트웹사이트가 표준
+ - https://ko.reactjs.org/docs/getting-started.html
+ - 화면깜빡임 없이 자연스럽게 페이지가 넘어감
+ - 모바일로 봤을때도 자연스러움(사용자 경험이 좋음)
+ - 데이터 처리가 쉬움(데이터와 화면을 일치시키는 것)
+ ex) 좋아요 버튼을 누르면 좋아요 버튼을 찾아서 1증가시켜주는것
+ - 재활용 가능한 컴포넌트(컴포넌트 = 조각)
