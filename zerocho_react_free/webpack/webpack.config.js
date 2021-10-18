@@ -55,13 +55,14 @@ module.exports = {
     output: { //제일 중요, __dirname : 현재 폴더 경로
         path: path.join(__dirname, 'dist'), //
         filename: 'app.js',
-        publicPath: '/dist/',
+        publicPath: '/dist',
     },
 
     //웹펙데브서버 : 소스코드의 변경점을 감지할 수 있음
     devServer:{
-        devMiddleware: { publicPath: '/dist' }, //가상경로
-        static: { directory: path.resolve(__dirname) }, //실제경로
+        devMiddleware: { publicPath: '/dist' }, //가상경로(dist폴더에 결과물(웹팩이 빌드한 파일)을 메모리로 저장)
+        static: { directory: path.resolve(__dirname) }, //실제 존재하는 정적파일의 경로
+        // static: { directory: path.resolve(__dirname, 'public') }, //public 폴더안에 있을때
         hot: true
     },
 

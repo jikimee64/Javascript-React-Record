@@ -11,7 +11,11 @@ const getNumbers = () => {
     return array;
 };
 
+//함수 컴포넌트는 클래스와 달리 value가 바귀어도 통째로 실행됨
 const NumberBaseball = () => {
+    //value가 바뀌어도 getNumbers()가 재실행됨(헤비한 함수면 안좋음),원래는 처음에만 실행해야함
+    //usememo, useCallback으로 해결 가능 (useEffect 선행학습하고 해야 더 좋음)
+
     const [answer, setAnswer] = useState(getNumbers());
     const [value, setValue] = useState('');
     const [result, setResult] = useState('');
