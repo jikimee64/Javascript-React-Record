@@ -38,7 +38,8 @@ class RSPClass extends Component {
     };
 
     // 컴포넌트가 처음 렌더링된 후(render()가 처음 실행된 후)
-    // 여기에 비동기 요청을 많이 해요
+    // 여기에 비동기 요청을 많이 해요(+ setInterval or setTimout, 라이브러리 사용(D3, video.js),
+    //+ props로 받은 값ㄷ을 컴포넌트의 로컬 상태로 설정
     //리 렌더링할때는 실행 X
     //setInterval, setTimeout 같은거 안지우면 메모리 차다가 터짐(메모리 누수) ★★★
     componentDidMount() {
