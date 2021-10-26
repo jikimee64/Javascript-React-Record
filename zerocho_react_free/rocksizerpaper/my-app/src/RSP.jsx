@@ -68,20 +68,36 @@ const RSP = () => {
      deps에 넣은 파라미터값이 업데이트 됬을때 실행.
      componentDidUpdate처럼 실행.
      */
-    useEffect(() => { // componentDidMount, componentDidUpdate 역할(1대1 대응은 아님)
-        console.log('다시 실행');
+    // componentDidMount, componentDidUpdate 역할(1대1 대응은 아님)
+    /**
+     * 추가 내용
+     * mount시 주요 작업 예시
+     * props로 받은 값을 컴포넌트의 로컬 state로 설정.
+     * 외부 api 요청.
+     * 라이브러리 사용.
+     * setInterval(),setTimeout() 을 통한 작업.
+     *
+     * unmount시 주요 작업 예시
+     * setInterval(),setTimeout() 사용한 작업 clear. (clearInterval(), clearTimeout())
+     * 라이브러리 인스턴스 제거
+     *
+     * deps 파라미터를 생략하는 경우
+     *  리렌더링 될때마다 호출이 된다.
+     */
+    useEffect(() => {
+        console.log('컴포넌트 마운드');
         interval.current = setInterval(changeHand, 100);
         return () => { // componentWillUnmount 역할 (cleanUp 함수라고도 부름)
-            console.log('종료');
+            console.log('컴포넌트가 화면에서 사라짐');
             clearInterval(interval.current);
         }
-    }, [imgCoord]); //여러개 넣을 수 있음, 배열에는 꼭 useEffect를 다시 실행할 값만 넣어야됨
+    }, [imgCoord]);
+    //여러개 넣을 수 있음, 배열에는 꼭 useEffect를 다시 실행할 값만 넣어야됨
     //useEffect을 실행하고 싶은 state를 설정
     //deps의 배열을 비우면 컴포넌트가 처음 나타날때에만 useEffect에 등록된 함수가 호출
     //배열에 값을 넣으면 컴포넌트가 처음 마운트 될 때에도 호출되고, 지정한 값이 바뀔때도 호출됨
 
     //useEffect 여러개 쓰기 가능
-
 
     const changeHand = () => {
         if (imgCoord === rspCoords.바위) {

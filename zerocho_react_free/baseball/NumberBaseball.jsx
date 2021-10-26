@@ -76,7 +76,7 @@ const NumberBaseball = () => {
     },[value, answer]);
     //deps: value와 answer의 값이 바뀔때 새로운 함수를 생성, 동일하면 기존 함수 재사용
 
-    //useCallback : 첫번째 인자로 넘어온 함수를, 두번째 인자로 넘어온 배열 내의 값이
+    // useCallback : 첫번째 인자로 넘어온 함수를, 두번째 인자로 넘어온 배열 내의 값이
     // 변경될 때까지 저장해놓고 재사용할 수 있게 해줍니다.
     const onChangeInput = useCallback((e) => setValue(e.target.value), []);
 

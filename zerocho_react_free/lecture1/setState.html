@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="root">
+
+</div>
+
+<script type="text/babel">
+
+    class ClassComponent extends React.Component {
+        state = {
+            count: 0,
+        };
+
+        add = (number) => {
+            this.setState({
+                count: this.state.count + number
+            });
+            console.log(this.state.count);
+        }
+
+        add2 = number => {
+            // 전달받은 인수 number만큼 state를 증가시키는 함수.
+            this.setState((state, props) => {
+                console.log('this.state.count',this.state.count); // 갱신 이전 값
+                console.log('state.count',state.count); // 갱신 이후 값
+                return { count: this.state.count + number }; // 리턴 값은 기존의 this.state객체에 얇게 병합된다.
+            });
+        };
+
+        /**
+         * setState를 이벤트 핸들러 안에서 호출한다면. 호출되는 setState에 의해서
+         * 업데이트가 요청되는 state의 count의 값은 호출 이후 즉각적으로 반영되지 않는다.
+         * setState는 이벤트 핸들러 안에서 현재 state의 값에 대한 변화를 요청하기만
+         * 하는 것이고, 그 요청사항은 이벤트 핸들러가 종료되고 react에 의해서
+         * 효율적으로 상태가 갱신된다.
+         *
+         * 이유 : 여러번의 불필요한 렌더링을 막기위함함
+        */
+        click = () => {
+            this.add(1); // count를 1 증가시켜줘 라고 react에게 요청한 상태
+                        //그러나 count는 아직 요청 반영 전의 값인 0 이다.
+            this.add(2); // count를 2 증가시켜줘 라고 react에게 요청한 상태
+                        //그러나 count는 아직 요청 반영 전의 값인 0 이다.
+            this.add(3); // count를 3 증가시켜줘 라고 react에게 요청한 상태
+                        //그러나 count는 아직 요청 반영 전의 값인 0 이다.
+            // 이제 요청사항들을 종합한다. (batching)
+            // 렌더링 전에 state를 요청에 맞게 변경하고 이 변경된 state 값으로 render를 한다. render 호출 ( shouldComponentUpdate가 true이면 )
+            // 따라서 render() 메서드 안에서는 state값이 업데이트 된 값이고, 이 값으로 렌더링을 하기 때문에 우리 눈에는 우리가 요청한 state 값이 보이게 되는것.
+        };
+
+        //화면조작은 리액트가..
+        //개발자는 데이터 조작만
+        //ref는 Dom에 직접 접근
+        input;
+
+        onRefInput = (c) => {
+            this.input = c;
+        }
+
+
+        render() {
+            return (
+                <div>
+                    {this.state.count} <button onClick={this.click}>count 증가</button>
+                </div>
+            );
+        }
+    }
+
+</script>
+
+<script type="text/babel">
+    ReactDOM.render(<ClassComponent/>, document.getElementById('root'));
+</script>
+</body>
+</html>

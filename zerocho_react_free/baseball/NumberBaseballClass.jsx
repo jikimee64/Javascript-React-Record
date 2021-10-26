@@ -113,16 +113,6 @@ class NumberBaseball extends Component {
                         );
                     })}
                 </ul>
-
-                <ul>
-                    {
-                        tries.map( (v, i) => {
-                            return (
-                                <TryClass key={`${i + 1}차 시도 : `} tryInfo={v} />
-                            )
-                        })
-                    }
-                </ul>
             </>
         );
         //react 반복분쓸떄 key 필수, 안그러면 콘솔에러남

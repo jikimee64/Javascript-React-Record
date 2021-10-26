@@ -79,10 +79,22 @@
         // ref란? Dom에 직접 접근
         input;
 
+        //ref의 바람직한 사용예
+        //포커스, 텍스트 선택영역, 혹은 미디어의 재생을 관리할 때.
+        //애니메이션을 직접적으로 실행시킬 때.
+        //서드 파티 DOM 라이브러리를 React와 같이 사용할 때.
         onRefInput = (c) => {
             this.input = c;
         };
 
+        /**
+         * JSX
+         * JSX 에서 선언하는 태그는 반드시 닫혀야한다.
+         * <div></div>로 닫거나 <> </> (fragment)로 닫는다
+         * JSX 내에서 JS 변수를 사용하고자 하는 경우 {} 사용
+         * JSX 내에서 style은 객체 형태로 지정, 그리고 camelCase형식
+         * JSX 내에서 css의 class를 지정하는 것은 className으로 사용해야 한다
+         */
         //렌더함수만 재실행
         render() {
             //this.setState를 할때는 render() 함수가 다시 실행되는걸 알려야 됨

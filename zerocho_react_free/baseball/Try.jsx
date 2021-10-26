@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 
-//memo : 자식 컴포넌트의 랜더링의 불필요한 랜더링을 줄이기 위해서
+//memo : 자식 컴포넌트의 불필요한 랜더링을 줄이기 위해서
 // React.memo() 함수와도 사용할 수 있습니다.
 //props 값이 변경되지 않는 한 다시 호출되지 않습니다.
 const Try = memo(({tryInfo}) => {

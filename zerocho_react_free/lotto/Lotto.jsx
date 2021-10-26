@@ -70,13 +70,13 @@ const Lotto = () => {
     }, [winNumbers]);
 
     //useCallback : 함수자체를 기억
-    //렌더링될때 이부분은 처음안 생성되고 나중엔 X
+    //렌더링될때 이부분은 처음만 생성되고 나중엔 X
     //자식 컴포넌트에 함수를 넘길때는 반드시 userCallback을 써야함, 매번 새로운 함수를 생성할 필요가 없으므로
     //자식은 새로운 함수를 받으면 리렌더링을 함
     const onClickRedo = useCallback(() => {
         console.log('onClickRedo');
         console.log(winNumbers);//모든함수를 useCallback으로 감쌀떄 문제점, 당첨숫자가 바뀌지 않음
-        //useCallback안에서 쓰이는 state는 항상 input에다가 넣어줘야함
+        //useCallback안에서 쓰이는 state는 항상 deps(두번째 인자)에다가 넣어줘야함
         //winNumbers가 바뀌면 userCallback이 새로실행됨
         setWinNumbers(getWinNumbers());
         setWinBalls([]);

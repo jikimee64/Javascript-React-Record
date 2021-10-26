@@ -56,7 +56,7 @@ class Lotto extends Component {
 
     //state가 바뀌었을때 실행
     //조건문을 줘서 업데이트하고 싶은 상황을 주면됨(주의)
-    //prevProps : 부도한테 받은 props
+    //prevProps : 부모한테 받은 props
     componentDidUpdate(prevProps, prevState) {
         console.log('didUpdate');
         if (this.state.winBalls.length === 0) {
@@ -69,7 +69,7 @@ class Lotto extends Component {
 
     //부모 컴퍼넌트가 자식컴포넌트를 없앨 수 있음
     //그럴때 setTimeout을 항상 clear 해줘야함
-    //state는 컴포너늩에 귀속된상태
+    //state는 컴포넌트에 귀속된상태
     //결론 : 로또 컴포넌트를 없엘때 설정된 timeout도 clear 해줘야 함
     componentWillUnmount() {
         this.timeouts.forEach((v) => {

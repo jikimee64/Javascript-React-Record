@@ -16,6 +16,8 @@ class TryClass extends PureComponent {
 
     //이건 클래스형에만 있는것
     //렌더링 커스텀하게 할려면 이거랑 Component
+    //어떤 경우에 렌더링 해야하지 명시
+    //뀌는게 없으면 렌더링 X
     shouldComponentUpdate(nextProps, nextState, nextContext) {
 
     }

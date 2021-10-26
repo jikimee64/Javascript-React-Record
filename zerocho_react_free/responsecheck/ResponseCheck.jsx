@@ -8,7 +8,7 @@ const ResponseCheck = () => {
     //class에서는 보통 ref는 DOM에 직접 접근할떄만..
     //훅에서는 this에 접근할때도 사용가능(훅에서 추가됨)
     //useRef라서 .current로 해줘야됨
-    //useRef의 값을 바꿔도 render()부분이 재실행되징 않음
+    //useRef의 값을 바꿔도 render()부분이 재실행되지 않음
     //즉, 값이바뀌기는 하지만 화면에 영향을 주고싶지 않을때 사용 가능(변하는 값을 잠깐 기록하는 걸로 생각)
     const timeout = useRef(null);
     const startTime = useRef(0);
@@ -36,6 +36,7 @@ const ResponseCheck = () => {
             });
         }
     }, [state]);
+
     const onReset = useCallback(() => {
         setResult([]);
     }, []);

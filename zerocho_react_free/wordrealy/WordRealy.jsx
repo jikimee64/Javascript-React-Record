@@ -21,6 +21,10 @@ const WordRelay = () => {
         }
     };
 
+    const onChange = (e) => {
+        setValue(e.currentTarget.value);
+    }
+
     return (
         <>
             <div>{word}</div>
@@ -28,7 +32,7 @@ const WordRelay = () => {
                 <input
                     ref={inputEl}
                     value={value}
-                    onChange={(e) => setValue(e.currentTarget.value)}
+                    onChange={this.onChange}
                 />
                 <button>입력!</button>
             </form>
