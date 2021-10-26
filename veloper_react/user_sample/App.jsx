@@ -9,6 +9,8 @@ export default function App() {
     });
 
     const {username, email} = inputs;
+
+    //(onChange 의 경우엔 함수형 업데이트를 해도 영향은 가지 않지만, 연습삼아 해주겠습니다).
     const onChange = useCallback(e => {
         const {value,name} = e.target;
         setInputs(inputs => ({
@@ -53,12 +55,15 @@ export default function App() {
             username,
             email
         };
-        setUsers(users => [...users,user]);
+        setUsers(users => [...users,user]); //함수형 업데이트
         setInputs({ username : '', email: '' });
         nextId.current += 1;
     },[username,email]);
 
     const onRemove = useCallback(id => {
+        // user.id 가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
+        // = user.id 가 id 인 것을 제거함
+        //함수형 업데이트
         setUsers(users => users.filter(user => user.id !== id))
     },[]);
 
