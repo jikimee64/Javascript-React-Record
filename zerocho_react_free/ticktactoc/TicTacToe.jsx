@@ -12,7 +12,7 @@ import Table from './Table';
  * useState를 계속 만들면 문제점
  * 실제 유저가 클릭하는건 TD
  * 하지만 state를 TicTacToc이 관리하기 때문에
- * TicTacToe -> Table -> Tr - > td까지 state를 전달해줘야함
+ * MineSearch -> Table -> Tr - > td까지 state를 전달해줘야함
  *
  * state가 계속 늘어나면 관리도 힘들고 자식에 넘겨주기도 힘드니 이걸 해결하는 방법인
  * useReducer를 이용
