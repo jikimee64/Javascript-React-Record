@@ -3,7 +3,7 @@ import { START_GAME, TableContext } from './MineSearch';
 
 //하위컴포넌트들의 모두 다 memo를 적용해야 상위 컴포넌트들도 memo적용 가능
 const Form = memo(() => {
-    const [row, setrow] = useState(10); //세로몇줄
+    const [row, setRow] = useState(10); //세로몇줄
     const [cell, setCell] = useState(10); //칸 몇개
     const [mine, setMine] = useState(20); //지뢰 몇개할지
     const { dispatch } = useContext(TableContext);

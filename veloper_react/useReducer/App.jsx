@@ -1,6 +1,7 @@
 import React, { useRef, useReducer, useMemo, useCallback } from 'react';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
+import useInputs from "../custom_hook/useInputs"
 
 function countActiveUsers(users) {
     console.log('활성 사용자 수를 세는중...');
@@ -45,29 +46,29 @@ function reducer(state, action) {
     // const { users, inputs } = state;
     // const { name, value, user, id } = action;
     switch (action.type) {
-        case 'CHANGE_INPUT':
-            return {
-                ...state,
-                inputs: {
-                    ...state.inputs,
-                    [action.name]: action.value
-                }
-            };
+        // case 'CHANGE_INPUT':
+        //     return {
+        //         ...state,
+        //         inputs: {
+        //             ...state.inputs,
+        //             [action.name]: action.value
+        //         }
+        //     };
         case 'CREATE_USER':
             return {
-                inputs: initialState.inputs,
+               // inputs: initialState.inputs, 커스텀 훅 사용하므로 주석
                 users: state.users.concat(action.user)
             };
         case 'TOGGLE_USER':
             return {
-                ...state,
+                // ...state,
                 users: state.users.map(user =>
                     user.id === action.id ? { ...user, active: !user.active } : user
                 )
             };
         case 'REMOVE_USER':
             return {
-                ...state,
+                // ...state,
                 users: state.users.filter(user => user.id !== action.id)
             };
         default:
@@ -75,21 +76,37 @@ function reducer(state, action) {
     }
 }
 
+/**
+ * 리액트의 Context API 를 사용하면, 프로젝트 안에서 전역적으로 사용 할 수 있는 값을 관리 할 수 있습니다.
+ * 여기서 제가 "상태" 가 아닌 "값" 이라고 언급을 했는데요, 이 값은 꼭 상태를 가르키지 않아도 됩니다.
+ * 이 값은 함수일수도 있고, 어떤 외부 라이브러리 인스턴스일수도 있고 심지어 DOM 일 수도 있습니다.
+
+ 물론, Context API 를 사용해서 프로젝트의 상태를 전역적으로 관리 할 수도 있긴한데요,
+ 이에 대해서는 나중에 더 자세히 알아보도록 하겠습니다.
+ */
+// UserDispatch 라는 이름으로 내보내줍니다.
+export const UserDispatch = React.createContext(null);
+
 function App() {
+    const [{ username, email }, onChange, reset] = useInputs({
+        username: '',
+        email: ''
+    });
+
     const [state, dispatch] = useReducer(reducer, initialState);
     const nextId = useRef(4);
 
     const { users } = state;
-    const { username, email } = state.inputs;
+    //const { username, email } = state.inputs;
 
-    const onChange = useCallback(e => {
-        const { name, value } = e.target;
-        dispatch({
-            type: 'CHANGE_INPUT',
-            name,
-            value
-        });
-    }, []);
+    // const onChange = useCallback(e => {
+    //     const { name, value } = e.target;
+    //     dispatch({
+    //         type: 'CHANGE_INPUT',
+    //         name,
+    //         value
+    //     });
+    // }, []);
 
     const onCreate = useCallback(() => {
         dispatch({
@@ -101,7 +118,7 @@ function App() {
             }
         });
         nextId.current += 1;
-    }, [username, email]);
+    }, [username, email, reset]);
 
     const onToggle = useCallback(id => {
         dispatch({
@@ -119,16 +136,18 @@ function App() {
 
     const count = useMemo(() => countActiveUsers(users), [users]);
     return (
-        <>
+        //UserDispatch 라는 Context 를 만들어서, 어디서든지 dispatch 를 꺼내 쓸 수 있도록
+        // 준비를 해준 것입니다.
+        <UserDispatch.provider value={dispatch}>
             <CreateUser
                 username={username}
                 email={email}
-                onChange={onChange}
-                onCreate={onCreate}
+                // onChange={onChange}
+                // onCreate={onCreate}
             />
             <UserList users={users} onToggle={onToggle} onRemove={onRemove} />
             <div>활성사용자 수 : {count}</div>
-        </>
+        </UserDispatch.provider>
     );
 }
 
