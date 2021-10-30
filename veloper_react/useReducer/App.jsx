@@ -1,7 +1,8 @@
-import React, { useRef, useReducer, useMemo, useCallback } from 'react';
+import React, {useRef, useReducer, useMemo, useCallback} from 'react';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
 import useInputs from "../custom_hook/useInputs"
+import produce from 'immer';
 
 function countActiveUsers(users) {
     console.log('활성 사용자 수를 세는중...');
@@ -56,20 +57,35 @@ function reducer(state, action) {
         //     };
         case 'CREATE_USER':
             return {
-               // inputs: initialState.inputs, 커스텀 훅 사용하므로 주석
+                // inputs: initialState.inputs, 커스텀 훅 사용하므로 주석
                 users: state.users.concat(action.user)
+                //immer
+                // produce(state, draft => {
+                //     draft.users.push(action.user);
+                // });
             };
         case 'TOGGLE_USER':
             return {
                 // ...state,
                 users: state.users.map(user =>
-                    user.id === action.id ? { ...user, active: !user.active } : user
+                    user.id === action.id ? {...user, active: !user.active} : user
                 )
+                //immer
+                // produce(state, draft => {
+                //     const user = draft.users.find(user => user.id === action.id);
+                //     user.active = !user.active;
+                //     });
             };
         case 'REMOVE_USER':
             return {
                 // ...state,
                 users: state.users.filter(user => user.id !== action.id)
+
+                //immer
+                /*          produce(state, draft => {
+                            const index = draft.users.findIndex(user => user.id === action.id);
+                            draft.users.splice(index, 1);
+                        });*/
             };
         default:
             return state;
@@ -88,7 +104,7 @@ function reducer(state, action) {
 export const UserDispatch = React.createContext(null);
 
 function App() {
-    const [{ username, email }, onChange, reset] = useInputs({
+    const [{username, email}, onChange, reset] = useInputs({
         username: '',
         email: ''
     });
@@ -96,7 +112,7 @@ function App() {
     const [state, dispatch] = useReducer(reducer, initialState);
     const nextId = useRef(4);
 
-    const { users } = state;
+    const {users} = state;
     //const { username, email } = state.inputs;
 
     // const onChange = useCallback(e => {
@@ -145,7 +161,7 @@ function App() {
                 // onChange={onChange}
                 // onCreate={onCreate}
             />
-            <UserList users={users} onToggle={onToggle} onRemove={onRemove} />
+            <UserList users={users} onToggle={onToggle} onRemove={onRemove}/>
             <div>활성사용자 수 : {count}</div>
         </UserDispatch.provider>
     );
